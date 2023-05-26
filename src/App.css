@@ -1,5 +1,67 @@
 .App {
   text-align: center;
+
+  padding: 1%;
+}
+
+.cBtn {
+  min-width: 0;
+  padding: 0px 5px;
+  margin-right: 5px;
+}
+
+input {
+  padding: 5px;
+  margin: 5px 0px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  font-weight: bold !important;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 4px 8px !important;
+}
+
+h6 {
+  text-align: initial;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.formContainer>div {
+  display: grid;
+}
+
+.formContainer>div>label {
+  min-width: 20%;
+}
+
+
+.btnContainer {
+  padding: 0px;
+  display: inline-block !important;
+}
+
+.btnContainer > button{
+  margin-left: 10px;
+  float: right;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
 .App-logo {
@@ -32,6 +94,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
