@@ -4,6 +4,8 @@ import MUIDataTable from 'mui-datatables';
 import { CustomModal } from './CustomModal';
 import { Form } from './Form';
 import { DefaultButton } from '@fluentui/react/lib/Button';
+import { CustomDialog } from './CustomDialog';
+import { useBoolean } from '@fluentui/react-hooks';
 
 const myHeaders = new Headers();
 myHeaders.append("Accept", "application/json");
@@ -17,6 +19,8 @@ function App() {
 
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
+  const [dObj, setDobj] = useState({ title: '', subText: '' });
 
   const custModal = (header, btnText, rowIndex, eToBeEdited = defaultEmployee) => {
     const props = {
@@ -24,6 +28,7 @@ function App() {
       btnText,
       modalBody: <Form
         setEmpCallBack={(emp) => {
+          debugger;
           employees[rowIndex] = { ...employees[rowIndex], ...emp }
           setEmployees([...employees]);
         }}
@@ -82,14 +87,18 @@ function App() {
         const emp = employees;
         emp.splice(rowIndex, 1);
         setEmployees([...emp]);
-        alert("Item Deleted!");
+        showDialog("Message", "Item deleted successfully")
       })
       .catch(error => {
-        console.error('error', error)
+        showDialog("Error Message", `Error occurred while deleting item- ${JSON.stringify(error)}`);
+        console.error('error', error);
       });
   }
 
-
+  const showDialog = (title, subText) => {
+    setDobj({ title, subText });
+    toggleHideDialog();
+  }
 
   const fetchData = (url) => {
     const requestOptions = {
@@ -104,13 +113,13 @@ function App() {
         if (e?.response.length > 0) {
           setEmployees(e.response);
         }
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch(error => console.error('error', error));
   }
 
   if (isLoading) {
-    fetchData('/api/employees')
+    fetchData('/api/employees');
   }
 
   return (
@@ -121,8 +130,17 @@ function App() {
         columns={columns}
         options={options}
       />
+      <CustomDialog
+        hideDialog={hideDialog}
+        toggleHideDialog={toggleHideDialog}
+        title={dObj.title}
+        subText={dObj.subText}
+        closeBtnHandler={toggleHideDialog}
+      />
     </div>
   );
 }
+
+
 
 export default App;

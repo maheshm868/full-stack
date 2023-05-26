@@ -19,7 +19,6 @@ app.post('/api/employees', async (req, res) => {
 });
 
 app.post('/api/employee', async (req, res) => {
-    console.info('req --> ', req);
     const response = await dbOperations
         .createEmployee(req.body)
         .then(r => r)
@@ -29,7 +28,6 @@ app.post('/api/employee', async (req, res) => {
 });
 
 app.post('/api/deleteEmployee', async (req, res) => {
-    console.info('req --> ', req);
     const response = await dbOperations
         .deleteEmployee(req.body)
         .then(r => r)
@@ -39,8 +37,3 @@ app.post('/api/deleteEmployee', async (req, res) => {
 });
 
 app.listen(API_PORT, () => console.info(`Listening on port ${API_PORT}`));
-
-
-
-
-// let nEmp = new Employee(0, 'Mahesh', 'M', 'maheshm868@abc.com', '5000', 'India')

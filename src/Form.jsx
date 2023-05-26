@@ -1,4 +1,4 @@
-import { DefaultButton } from "@fluentui/react";
+import { DefaultButton, Dropdown } from "@fluentui/react";
 import React, { useState } from "react";
 import { CustomDialog } from "./CustomDialog";
 import { useBoolean } from "@fluentui/react-hooks";
@@ -36,10 +36,9 @@ export const Form = (props) => {
         fetch(endpoint, requestOptions)
             .then(response => response.json())
             .then(e => {
-                console.info(e)
                 props.setEmpCallBack(emp);
-                setEmp(defaultEmployee);
                 showDialog('Message', 'Successfully saved item');
+                setEmp(defaultEmployee);
             })
             .catch(error => {
                 console.error('error', error)
@@ -71,32 +70,46 @@ export const Form = (props) => {
         />
         <div>
             <label htmlFor="FirstName">First Name</label>
-            <input type="text" placeholder="First Name" name="FirstName" onChange={setInputFieldValues} value={emp?.ID ? emp.FirstName : ''} />
+            <input type="text" placeholder="First Name" name="FirstName" onChange={setInputFieldValues} value={emp?.FirstName ? emp.FirstName : ''} />
         </div>
 
         <div>
             <label htmlFor="LastName">Last Name</label>
-            <input type="text" placeholder="Last Name" name="LastName" onChange={setInputFieldValues} value={emp?.ID ? emp.LastName : ''} />
+            <input type="text" placeholder="Last Name" name="LastName" onChange={setInputFieldValues} value={emp?.LastName ? emp.LastName : ''} />
         </div>
 
         <div>
-            <label htmlFor="Gender">Gender</label>
-            <input type="text" placeholder="Gender" name="Gender" onChange={setInputFieldValues} value={emp?.ID ? emp.Gender : ''} />
+            <label htmlFor="Gender" onChange={(e, v) => console.log(e, v)} onSelect={(e, v) => console.log(e, v)}>Gender</label>
+            <Dropdown
+                onChange={(_, value) => setEmp({ ...emp, Gender: value.key })}
+                options={[
+                    { key: 'Female', text: "Female" },
+                    { key: 'Male', text: 'Male' },
+                    { key: 'Other', text: 'Other' }
+                ]}
+                selectedKey={emp?.Gender ? emp?.Gender : ''}
+                placeholder="Select Gender"
+            />
         </div>
 
         <div>
             <label htmlFor="Email">Email</label>
-            <input type="text" placeholder="Email" name="Email" onChange={setInputFieldValues} value={emp?.ID ? emp.Email : ''} />
+            <input type="text" placeholder="Email" name="Email" onChange={setInputFieldValues} value={emp?.Email ? emp.Email : ''} />
         </div>
 
         <div>
             <label htmlFor="Salary">Salary</label>
-            <input type="number" placeholder="Salary" name="Salary" onChange={setInputFieldValues} value={emp?.ID ? emp.Salary : ''} />
+            <input type="number" placeholder="Salary" name="Salary" onChange={setInputFieldValues} value={emp?.Salary ? emp.Salary : ''} />
         </div>
 
         <div>
             <label htmlFor="Counrty">Country</label>
-            <input type="text" placeholder="Country" name="Counrty" onChange={setInputFieldValues} value={emp?.ID ? emp.Counrty : ''} />
+            <Dropdown
+                onChange={(_, value) => setEmp({ ...emp, Counrty: value.key })}
+                options={['Argentina', 'Brazil', 'Cuba', 'Egypt', 'France', 'Germany', 'Hong Kong', 'India', 'Japan', 'Lebanon', 'Maldives', 'Namibia'].map(x => { return { key: x, text: x } })}
+                selectedKey={emp?.Counrty ? emp?.Counrty : ''}
+                placeholder="Select Country"
+            />
         </div>
 
         <br />

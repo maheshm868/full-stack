@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-
   padding: 1%;
 }
 
@@ -30,6 +29,13 @@ th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 4px 8px !important;
+  text-transform: capitalize !important;
+}
+
+th button {
+  text-transform: capitalize !important;
+  font-weight: bold !important;
+  cursor: pointer;
 }
 
 h6 {
@@ -55,7 +61,7 @@ h6 {
   display: inline-block !important;
 }
 
-.btnContainer > button{
+.btnContainer>button {
   margin-left: 10px;
   float: right;
 }
